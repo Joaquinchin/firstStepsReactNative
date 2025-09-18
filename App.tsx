@@ -56,7 +56,7 @@ export default function App() {
   }
 
   function formatAddress(p: Location.LocationGeocodedAddress) {
-    // Campos útiles varían por plataforma y país; armamos un string amigable
+    // Campos útiles varían por plataforma y país
     const parts = [
       p.name, // a veces el número/POI
       p.street,
@@ -74,7 +74,7 @@ export default function App() {
       setLocError(null);
       setIsGettingLocation(true);
 
-      // 1) Permiso
+      // 1 Permiso
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
         setLocError(
@@ -83,14 +83,14 @@ export default function App() {
         return;
       }
 
-      // 2) Coordenadas
+      // 2 Coordenadas
       const pos = await Location.getCurrentPositionAsync({
         accuracy: Location.Accuracy.Balanced,
       });
       const coords = { latitude: pos.coords.latitude, longitude: pos.coords.longitude };
       setLocation(coords);
 
-      // 3) Reverse geocoding → dirección
+      // 3Reverse geocoding → dirección
       let addr: string | null = null;
       try {
         const places = await Location.reverseGeocodeAsync(coords);
@@ -104,7 +104,7 @@ export default function App() {
         setAddress(null);
       }
 
-      // 4) Guardar en AsyncStorage
+      // 4 Guardar en AsyncStorage
       const toSave: SavedLoc = { 
         id: Date.now().toString(), 
         ...coords, 
